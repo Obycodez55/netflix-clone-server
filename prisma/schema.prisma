@@ -18,8 +18,8 @@ model User {
   username          String    @unique
   email             String    @unique
   password          String
-  emailVerified     Boolean
-  emailVerifiedDate DateTime
+  emailVerified     Boolean   @default(false)
+  emailVerifiedDate DateTime?
   profilePic        String    @default(" ")
   isAdmin           Boolean   @default(false)
   createdAt         DateTime  @default(now())
@@ -81,17 +81,17 @@ model Movie {
   isSeries     Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  listIDs String[]   @db.ObjectId
-  lists  List[] @relation(fields: [listIDs], references: [id])
+  listIDs      String[] @db.ObjectId
+  lists        List[]   @relation(fields: [listIDs], references: [id])
 }
 
 model List {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  title   String  @unique
-  type    String
-  genre   Genre
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  title    String   @unique
+  type     String
+  genre    Genre
   movieIDs String[] @db.ObjectId
-  movies   Movie[]   @relation(fields: [movieIDs], references: [id])
+  movies   Movie[]  @relation(fields: [movieIDs], references: [id])
 }
 
 enum Genre {
