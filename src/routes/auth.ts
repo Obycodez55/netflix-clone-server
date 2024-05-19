@@ -1,17 +1,23 @@
 import { Router } from "express";
-import { Request, Response } from "express-serve-static-core";
+import { Response } from "express-serve-static-core";
 
+// Import Handlers
 import register from "../handlers/auth/register";
 import login from "../handlers/auth/login";
 
+// Import Middlewares
+import asyncHandler from '../Utils/asyncHandler';
+import authenticateToken from "../middlewares/authenticateToken";
+import { RequestNew } from "..";
+
 const router = Router();
 
-router.get("/", (request: Request, response: Response)=>{
-    response.send("Hello Auth");
+router.get("/", asyncHandler(authenticateToken), (request: RequestNew, response: Response) => {
+    response.send(request.user);
 })
 
-router.post("/register", register);
+router.post("/register", asyncHandler(register));
 
-router.post("/login", login)
+router.post("/login", asyncHandler(login));
 
 export default router;
