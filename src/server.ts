@@ -13,7 +13,7 @@ import ListsRouter from "./routes/lists";
 import errorHandler from "./middlewares/errorHandler";
 
 const app = express();
-const PORT = 4000;
+const PORT = 8080;
 dotenv.config();
 
 // Use middlewares

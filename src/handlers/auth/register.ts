@@ -24,9 +24,7 @@ const register = async (request: Request<{}, {}, UserDto>, response: Response) =
         isAdmin: newUser.isAdmin, 
         emailVerified: newUser.emailVerified 
     });
-
-    const {password, ...info} = newUser;
-    response.status(201).send({...info, accessToken});
+    response.status(201).send({accessToken});
 
 
 }

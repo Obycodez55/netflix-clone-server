@@ -7,15 +7,14 @@ import getAccessToken from "../../providers/getAccessToken";
 
 
 const login = async (request: Request<{}, {}, UserDto>, response: Response, next: NextFunction) => {
+    const {password} = request.body;
     const user = await getUserByEmail(request.body.email);
     if (!user) throw new CustomError('Invalid login details, Try again!', 403);
-    const passwordMatch = await compare(request.body.password, user.password);
+    const passwordMatch = await compare(password, user.password);
     if (!passwordMatch) throw new CustomError('Invalid login details, Try again!', 403);
     const { email, isAdmin, emailVerified } = user;
     const accessToken = getAccessToken({ email, isAdmin, emailVerified });
-
-    const { password, ...info } = user
-    response.status(200).send({ ...info, accessToken });
+    response.status(200).send({ accessToken });
 }
 
 export default login;
