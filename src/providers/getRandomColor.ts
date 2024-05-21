@@ -1,6 +1,6 @@
-type color = "red"| "blue"| "green"| "yellow";
+type color = "red"| "blue"| "yellow" | "green" | "darkblue";
 
-const colors: color[] = ["red", "blue", "green", "yellow"];
+const colors: color[] = ["red", "blue", "yellow", "green", "darkblue"];
 
 const getRandomColor = (): color =>{
     const randomNumber = Math.floor(Math.random() * colors.length);

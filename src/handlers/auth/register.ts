@@ -20,21 +20,29 @@ const register = async (request: Request<{}, {}, UserDto>, response: Response) =
             username,
             password: hashedPassword,
             profiles: {
-                create: {
-                    name: username,
-                    profilePic: color
+                createMany: {
+                    data: [
+                        {
+                            name: username,
+                            profilePic: color  
+                        },
+                        {
+                            name: "Kids",
+                            profilePic: "kids"
+                        }
+                    ]
                 }
+                // create: {
+                //     
+                // },
+                
             }
         },
         include: {
             profiles: true
         }
     });
-    const accessToken = getAccessToken({ 
-        email: newUser.email, 
-        isAdmin: newUser.isAdmin, 
-        emailVerified: newUser.emailVerified 
-    });
+    const accessToken = getAccessToken({email});
     response.status(201).send({accessToken});
 
 

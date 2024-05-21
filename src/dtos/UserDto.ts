@@ -5,7 +5,5 @@ export interface UserDto{
 }
 
 export interface JWTData{
-    email: string,
-    isAdmin: boolean,
-    emailVerified: boolean
+    email: string
 }

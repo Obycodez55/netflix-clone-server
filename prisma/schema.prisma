@@ -31,7 +31,7 @@ model User {
 model Profile {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  profilePic   Color   
+  profilePic   ProfilePic   
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   favouriteIds String[] @db.ObjectId
@@ -117,9 +117,11 @@ enum Genre {
   Period_piece
 }
 
-enum Color {
+enum ProfilePic {
   red
   blue
   yellow
   green
+  darkblue
+  kids
 }
