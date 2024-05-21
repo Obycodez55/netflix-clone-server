@@ -12,7 +12,8 @@ const register = async (request: Request<{}, {}, UserDto>, response: Response) =
     const { email, username } = request.body;
     const existingUser = await getUserByEmail(email);
     if (existingUser) throw new CustomError('User already exists', 409);
-    const hashedPassword = await hash(request.body.password, Number(salt))
+    const hashedPassword = await hash(request.body.password, Number(salt));
+    const color = getRandomColor();
     const newUser = await prismadb.user.create({
         data: {
             email,
@@ -21,7 +22,7 @@ const register = async (request: Request<{}, {}, UserDto>, response: Response) =
             profiles: {
                 create: {
                     name: username,
-                    profilePic: getRandomColor()
+                    profilePic: color
                 }
             }
         },

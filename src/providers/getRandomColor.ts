@@ -3,7 +3,10 @@ type color = "red"| "blue"| "green"| "yellow";
 const colors: color[] = ["red", "blue", "green", "yellow"];
 
 const getRandomColor = (): color =>{
-    return colors[Math.floor(Math.random() * colors.length)];
+    const randomNumber = Math.floor(Math.random() * colors.length);
+    const color = colors[randomNumber];
+    return color;
+
 }
 
 export default getRandomColor;
