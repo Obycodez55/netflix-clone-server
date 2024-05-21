@@ -4,6 +4,7 @@ import { RequestNew } from "..";
 import CustomError from "../Utils/CustomError";
 import { JWTData } from "../dtos/UserDto";
 import getUserByEmail from "../providers/getUserByEmail";
+import { Prisma } from "@prisma/client";
 
 const secret = process.env.JWT_SECRET as string;
 const authenticateToken = async (request: RequestNew, response: Response, next: NextFunction) => {
@@ -15,7 +16,7 @@ const authenticateToken = async (request: RequestNew, response: Response, next: 
     const { email } = data as JWTData;
     const user = await getUserByEmail(email);
     if (!user) throw new CustomError("Not Found: User not found", 404);
-    request.user = user;
+    request.user = user as Prisma.UserCreateInput;
     next();
 
 }

@@ -31,14 +31,14 @@ model User {
 model Profile {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  profilePic   String   @default(" ")
+  profilePic   Color   
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   favouriteIds String[] @db.ObjectId
   User         User?    @relation(fields: [userId], references: [id])
   userId       String?  @db.ObjectId
 
-  @@unique([name, userId])
+  @@unique([name, userId, profilePic])
 }
 
 model Account {
@@ -115,4 +115,11 @@ enum Genre {
   SciFi
   Historical
   Period_piece
+}
+
+enum Color {
+  red
+  blue
+  yellow
+  green
 }

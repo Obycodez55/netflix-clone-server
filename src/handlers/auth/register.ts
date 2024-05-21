@@ -5,6 +5,7 @@ import prismadb from "../../lib/prismadb";
 import getUserByEmail from "../../providers/getUserByEmail";
 import CustomError from "../../Utils/CustomError";
 import getAccessToken from "../../providers/getAccessToken";
+import getRandomColor from "../../providers/getRandomColor";
 
 const salt = process.env.SALT;
 const register = async (request: Request<{}, {}, UserDto>, response: Response) => {
@@ -16,7 +17,16 @@ const register = async (request: Request<{}, {}, UserDto>, response: Response) =
         data: {
             email,
             username,
-            password: hashedPassword
+            password: hashedPassword,
+            profiles: {
+                create: {
+                    name: username,
+                    profilePic: getRandomColor()
+                }
+            }
+        },
+        include: {
+            profiles: true
         }
     });
     const accessToken = getAccessToken({ 
