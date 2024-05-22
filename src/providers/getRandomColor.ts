@@ -1,8 +1,9 @@
-type color = "red"| "blue"| "yellow" | "green" | "darkblue";
+import { color } from "..";
 
-const colors: color[] = ["red", "blue", "yellow", "green", "darkblue"];
+const colorsList: color[] = ["red", "blue", "yellow", "green", "darkblue"];
 
-const getRandomColor = (): color =>{
+const getRandomColor = (list?: color[]): color =>{
+    const colors = list || colorsList;
     const randomNumber = Math.floor(Math.random() * colors.length);
     const color = colors[randomNumber];
     return color;

@@ -6,7 +6,11 @@ const getUserByEmail = async(email:string)=>{
             email
         },
         include: {
-            profiles: true
+            profiles: {
+                orderBy: {
+                    createdAt: "desc"
+                }
+            }
         }
     });
     return user;

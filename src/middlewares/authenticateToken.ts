@@ -16,7 +16,7 @@ const authenticateToken = async (request: RequestNew, response: Response, next: 
     const { email } = data as JWTData;
     const user = await getUserByEmail(email);
     if (!user) throw new CustomError("Not Found: User not found", 404);
-    request.user = user as Prisma.UserCreateInput;
+    request.user = user;
     next();
 
 }
