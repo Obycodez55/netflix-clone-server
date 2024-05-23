@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import { RequestNew } from "../..";
 import { Response } from 'express-serve-static-core';
 
