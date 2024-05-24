@@ -1,8 +1,8 @@
-import { color } from "..";
+import { ProfilePic } from "@prisma/client";
 
-const colorsList: color[] = ["red", "blue", "yellow", "green", "darkblue"];
+const colorsList: ProfilePic[] = ["red", "blue", "yellow", "green", "darkblue"];
 
-const getRandomColor = (list?: color[]): color =>{
+const getRandomColor = (list?: ProfilePic[]): ProfilePic =>{
     const colors = list || colorsList;
     const randomNumber = Math.floor(Math.random() * colors.length);
     const color = colors[randomNumber];
