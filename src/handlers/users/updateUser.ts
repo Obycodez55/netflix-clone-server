@@ -18,10 +18,7 @@ interface UpdateData {
 }
 
 const updateUser = async (request: UpdateRequest, response: Response) => {
-
-    const { id: userId, isAdmin } = request.user!;
     const { id } = request.params;
-    if (id !== userId && !isAdmin) throw new CustomError("Unauthorized: You are not allowed to make this request", 401);
 
     const { username, email } = request.body;
     const update: UpdateData = { username, email };

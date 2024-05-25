@@ -8,8 +8,6 @@ interface UsersRequest extends Request<{}, {}, {}, { newUsers?: boolean }> {
 }
 
 const findAll = async (request: UsersRequest, response: Response) => {
-    const { isAdmin } = request.user!;
-    if (!isAdmin) throw new CustomError("Unauthorized: You are not allowed to make this request", 401);
     const { newUsers } = request.query;
     const users = newUsers ? await prismadb.user.findMany({
         orderBy: {

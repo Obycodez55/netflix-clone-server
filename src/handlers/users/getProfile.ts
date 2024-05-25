@@ -1,12 +1,17 @@
 import {Request, Response } from 'express-serve-static-core';
 import prismadb from '../../lib/prismadb';
 import CustomError from '../../Utils/CustomError';
+import { User } from '../../../../client/index';
 
 interface ParamId{
     id: string;
 }
+interface ProfileRequest extends Request<ParamId, {}, {}> {
+    user?: User;
+}
 
-const getProfile = async (request: Request<ParamId>, response: Response) => {
+
+const getProfile = async (request: ProfileRequest, response: Response) => {
     const { id } = request.params;
     const profile = await prismadb.profile.findUnique({
         where: {

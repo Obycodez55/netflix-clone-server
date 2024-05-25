@@ -4,22 +4,6 @@ import CustomError from "../../Utils/CustomError";
 import prismadb from "../../lib/prismadb";
 
 const getStats = async (request: RequestNew, response: Response) => {
-    const { isAdmin } = request.user!;
-    if (!isAdmin) throw new CustomError("Unauthorized: You are not allowed to make this request", 401);
-    const monthsArray = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ]
     const stats = await prismadb.user.aggregateRaw({
         pipeline: [
             {

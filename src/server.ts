@@ -35,5 +35,5 @@ app.all("*", async (request: Request, response: Response, next: NextFunction) =>
 })
 app.use(errorHandler);
 app.listen(PORT, () => {
-    console.log(`Running on port ${PORT}`)
+    console.log(`Running on Port ${PORT}`)
 });
