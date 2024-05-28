@@ -33,7 +33,7 @@ router.delete("/delete/:id", authenticateToken("user"), asyncHandler(deleteUser)
 router.get("/stats", authenticateToken("admin"), asyncHandler(getStats))
 
 // Get a profile
-router.get("/profiles/:id",authenticateToken("user"), asyncHandler(getProfile));
+router.get("/profiles/:id",authenticateToken(), asyncHandler(getProfile));
 
 // Create A new profile
 router.post("/createProfile", authenticateToken(), asyncHandler(createProfile))
