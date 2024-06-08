@@ -1,9 +1,8 @@
 import { Request, Response } from 'express-serve-static-core';
 import CustomError from "../../Utils/CustomError";
 import getRandomColor from "../../providers/getRandomColor";
-import { Profile, ProfilePic } from "@prisma/client";
+import { Profile, ProfilePic, User } from "@prisma/client";
 import prismadb from "../../lib/prismadb";
-import { User } from '../../../../client';
 
 interface UserA extends User{
     profiles: Profile[]

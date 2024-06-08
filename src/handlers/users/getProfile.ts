@@ -1,7 +1,8 @@
 import {Request, Response } from 'express-serve-static-core';
 import prismadb from '../../lib/prismadb';
 import CustomError from '../../Utils/CustomError';
-import { User } from '../../../../client/index';
+import { User } from "@prisma/client";
+
 
 interface ParamId{
     id: string;
