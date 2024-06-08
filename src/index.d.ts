@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { User } from "@prisma/client";
 import { Request } from "express";
 
 export interface RequestNew extends Request{
