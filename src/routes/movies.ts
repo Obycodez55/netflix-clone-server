@@ -19,7 +19,7 @@ import Movies from "../Utils/Movies";
 const router = Router();
 
 // GET All Movies
-router.get("/", authenticateToken("admin"), asyncHandler(getAllMovies));
+router.get("/", authenticateToken(), asyncHandler(getAllMovies));
 
 // Create from File
 router.post("/create", authenticateToken("admin"), async (req: Request, res: Response) => {
