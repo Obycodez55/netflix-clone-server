@@ -6,6 +6,7 @@ import deleteMovie from "../handlers/movies/deleteMovie";
 import getRandomMovie from "../handlers/movies/getRandomMovie";
 import getMovieById from "../handlers/movies/getMovieById";
 import getAllMovies from "../handlers/movies/getAllMovies";
+import createMovie from "../handlers/movies/createMovie";
 
 
 // Import Middlewares
@@ -21,8 +22,8 @@ const router = Router();
 router.get("/", authenticateToken("admin"), asyncHandler(getAllMovies));
 
 // Create from File
-router.post("/create", authenticateToken("admin"), async(req: Request, res: Response)=>{
-    
+router.post("/create", authenticateToken("admin"), async (req: Request, res: Response) => {
+
     const movies = await prismadb.movie.createMany({
         data: Movies
     })
@@ -30,8 +31,10 @@ router.post("/create", authenticateToken("admin"), async(req: Request, res: Resp
 })
 
 // Create New Movie
+router.post("/", authenticateToken("admin"), asyncHandler(createMovie))
 
 // Update A Movie
+router.put("/:id", authenticateToken("admin"), asyncHandler(createMovie))
 
 // GET Random Movie
 router.get("/random", authenticateToken(), asyncHandler(getRandomMovie))
