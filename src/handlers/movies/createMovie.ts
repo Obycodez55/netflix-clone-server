@@ -4,8 +4,8 @@ import { Movie } from "@prisma/client";
 
 const createMovie = async(request: Request<{}, {}, Movie>, response: Response)=>{
     const movie = request.body;
-    await prismadb.movie.create({ data: movie });
-    response.status(201).send(movie);
+    const newMovie = await prismadb.movie.create({ data: movie });
+    response.status(201).send(newMovie);
 }
 
 export default createMovie;

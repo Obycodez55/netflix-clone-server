@@ -5,11 +5,11 @@ import { Movie } from "@prisma/client";
 const updateMovie = async (request: Request<{ id: string }, {}, Movie>, response: Response) => {
     const { id } = request.params;
     const update = request.body;
-    await prismadb.movie.update({
+    const updatedMovie = await prismadb.movie.update({
         where: { id },
         data: update
     })
-    response.status(201).send(movie);
+    response.status(201).send(updatedMovie);
 }
 
 export default updateMovie;
