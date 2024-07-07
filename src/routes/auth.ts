@@ -8,11 +8,11 @@ import login from "../handlers/auth/login";
 // Import Middlewares
 import asyncHandler from '../Utils/asyncHandler';
 import authenticateToken from "../middlewares/authenticateToken";
-import { RequestNew } from "..";
+import { AuthenticatedRequest } from "..";
 
 const router = Router();
 
-router.get("/", asyncHandler(authenticateToken), (request: RequestNew, response: Response) => {
+router.get("/", asyncHandler(authenticateToken), (request: AuthenticatedRequest, response: Response) => {
     response.send(request.user);
 })
 

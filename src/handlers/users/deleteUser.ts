@@ -1,16 +1,16 @@
 import { Response } from "express-serve-static-core";
 import CustomError from "../../Utils/CustomError";
 import prismadb from "../../lib/prismadb";
-import { RequestNew } from "../..";
+import { AuthenticatedRequest } from "../..";
 
 
-const deleteUser = async (request: RequestNew, response: Response) => {
+const deleteUser = async (request: AuthenticatedRequest, response: Response) => {
 
     const { id } = request.params;
 
     await prismadb.profile.deleteMany({
         where: {
-            userId:id
+            userId: id
         }
     })
 

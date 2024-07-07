@@ -1,12 +1,12 @@
 import { verify } from "jsonwebtoken";
 import { NextFunction, Response } from "express";
-import { RequestNew } from "..";
+import { AuthenticatedRequest } from "..";
 import CustomError from "../Utils/CustomError";
 import getUserByEmail from "../providers/getUserByEmail";
 
 
 const authenticateToken = (type?: "admin" | "user") => {
-    return async (request: RequestNew, response: Response, next: NextFunction) => {
+    return async (request: AuthenticatedRequest, response: Response, next: NextFunction) => {
         try {
             // Check if Authentication header was sent
             const authHeader = request.headers["authorization"];
@@ -16,7 +16,7 @@ const authenticateToken = (type?: "admin" | "user") => {
             // Check if the token is valid
             const data = verify(token, process.env.JWT_SECRET!);
             if (!data) throw new CustomError("Unauthorized: Invalid token", 401);
-            
+
             // Find the User with the email
             const { email } = data as { email: string };
             const user = await getUserByEmail(email);

@@ -1,13 +1,11 @@
-import {Request, Response } from 'express-serve-static-core';
+import { Request, Response } from 'express-serve-static-core';
 import prismadb from '../../lib/prismadb';
 import CustomError from '../../Utils/CustomError';
 import { User } from "@prisma/client";
 
 
-interface ParamId{
-    id: string;
-}
-interface ProfileRequest extends Request<ParamId, {}, {}> {
+
+interface ProfileRequest extends Request<{ id: string }, {}, {}> {
     user?: User;
 }
 
@@ -19,7 +17,7 @@ const getProfile = async (request: ProfileRequest, response: Response) => {
             id
         }
     })
-    if(!profile) throw new CustomError("Profile not found", 404)
+    if (!profile) throw new CustomError("Profile not found", 404)
     response.status(200).send(profile);
 }
 

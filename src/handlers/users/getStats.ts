@@ -1,9 +1,9 @@
 import { Response } from "express-serve-static-core";
-import { RequestNew } from "../..";
+import { AuthenticatedRequest } from "../..";
 import CustomError from "../../Utils/CustomError";
 import prismadb from "../../lib/prismadb";
 
-const getStats = async (request: RequestNew, response: Response) => {
+const getStats = async (request: AuthenticatedRequest, response: Response) => {
     const stats = await prismadb.user.aggregateRaw({
         pipeline: [
             {

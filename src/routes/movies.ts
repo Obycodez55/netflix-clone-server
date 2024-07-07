@@ -14,6 +14,8 @@ import asyncHandler from '../Utils/asyncHandler';
 import authenticateToken from "../middlewares/authenticateToken";
 import prismadb from "../lib/prismadb";
 import Movies from "../Utils/Movies";
+import updateMovie from "../handlers/movies/updateMovie";
+import { addToFavorite, getFavouriteList, removeFromFavorite } from "../handlers/movies/profileLists";
 
 
 const router = Router();
@@ -34,10 +36,19 @@ router.post("/create", authenticateToken("admin"), async (req: Request, res: Res
 router.post("/", authenticateToken("admin"), asyncHandler(createMovie))
 
 // Update A Movie
-router.put("/:id", authenticateToken("admin"), asyncHandler(createMovie))
+router.put("/:id", authenticateToken("admin"), asyncHandler(updateMovie))
 
 // GET Random Movie
 router.get("/random", authenticateToken(), asyncHandler(getRandomMovie))
+
+// GET My list
+router.get("/mylist/:profileId", authenticateToken(), asyncHandler(getFavouriteList));
+
+// Add to Favourites List
+router.post("/mylist/:profileId", authenticateToken(), asyncHandler(addToFavorite));
+
+// Remove from Favourites List
+router.delete("/mylist/:profileId", authenticateToken(), asyncHandler(removeFromFavorite));
 
 // GET Movie by Id
 router.get("/:id", authenticateToken(), asyncHandler(getMovieById));
