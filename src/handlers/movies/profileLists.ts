@@ -12,7 +12,8 @@ const getFavouriteList = async (request: ProfileListRequest, response: Response)
     const user = request.user as UserInterface;
     const profiles = user.profiles;
     const profileId = request.params.profileId;
-    if (!profiles?.includes(profileId)) throw new CustomError("You are not authorized to view this list", 403);
+    const profileInstance = profiles?.find(profile => profile.id === profileId);
+    if (!profileInstance) throw new CustomError("You are not authorized to view this list", 403);
     const profile = await prismadb.profile.findUnique({
         where: {
             id: profileId
@@ -34,7 +35,8 @@ const addToFavorite = async (request: ProfileListRequest, response: Response) =>
     const user = request.user as UserInterface;
     const profiles = user.profiles;
     const profileId = request.params.profileId;
-    if (!profiles?.includes(profileId)) throw new CustomError("You are not authorized to add to this list", 403);
+    const profileInstance = profiles?.find(profile => profile.id === profileId);
+    if (!profileInstance) throw new CustomError("You are not authorized to view this list", 403);
     const movieId = request.body.movieId;
     const movie = await prismadb.movie.findUnique({
         where: {
@@ -69,7 +71,8 @@ const removeFromFavorite = async (request: ProfileListRequest, response: Respons
     const user = request.user as UserInterface;
     const profiles = user.profiles;
     const profileId = request.params.profileId;
-    if (!profiles?.includes(profileId)) throw new CustomError("You are not authorized to delete from this list", 403);
+    const profileInstance = profiles?.find(profile => profile.id === profileId);
+    if (!profileInstance) throw new CustomError("You are not authorized to view this list", 403);
     const movieId = request.body.movieId;
     // Remove the movie from the profile's favourites list
     const profile = await prismadb.profile.update({
