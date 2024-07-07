@@ -15,6 +15,13 @@ const getProfile = async (request: ProfileRequest, response: Response) => {
     const profile = await prismadb.profile.findUnique({
         where: {
             id
+        },
+        include: {
+            favourites: {
+                orderBy: {
+                    createdAt: "desc"
+                }
+            }
         }
     })
     if (!profile) throw new CustomError("Profile not found", 404)
