@@ -5,21 +5,22 @@ const getRandomMovie = async (request: Request<{}, {}, {}, { type?: "series" | "
     const { type } = request.query;
     const isSeries = type === "series";
     let movie;
-    if (type){
-        movie = await prismadb.movie.aggregateRaw({
-            pipeline: [
-                { $match: { isSeries: isSeries } },
-                { $sample: { size: 1 } }
-            ]
-        });
-    }else{
-        movie = await prismadb.movie.aggregateRaw({
-            pipeline: [
-                { $sample: { size: 1 } }
-            ]
-        });
+    const movieCount = await prismadb.movie.count();
+    const randomIndex = Math.floor(Math.random() * movieCount);
+    if (type) {
+        movie = await prismadb.movie.findMany({
+            where: {
+                isSeries
+            },
+            take: 1,
+            skip: randomIndex
+        })
+    } else {
+        movie = await prismadb.movie.findMany({
+            take: 1,
+            skip: randomIndex
+        })
     }
-   
     response.status(200).send(movie[0]);
 }
 
