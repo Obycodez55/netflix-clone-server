@@ -29,15 +29,16 @@ model User {
 }
 
 model Profile {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  profilePic   ProfilePic
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  favouriteIds String[]   @db.ObjectId
-  favourites   Movie[]    @relation(fields: [favouriteIds], references: [id])
-  User         User?      @relation(fields: [userId], references: [id])
-  userId       String?    @db.ObjectId
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  profilePic       ProfilePic
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  favouriteIds     String[]           @db.ObjectId
+  favourites       Movie[]            @relation(fields: [favouriteIds], references: [id])
+  User             User?              @relation(fields: [userId], references: [id])
+  userId           String?            @db.ObjectId
+  ContinueWatching ContinueWatching[]
 
   @@unique([name, userId, profilePic])
 }
@@ -79,25 +80,26 @@ model VerificationToken {
 }
 
 model Movie {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  title        String    @unique
-  description  String
-  imageUrl     String
-  imageTitle   String
-  thumbnailUrl String
-  trailerUrl   String
-  videoUrl     String
-  year         Int
-  duration     String
-  limit        Int
-  genre        Genre[]
-  isSeries     Boolean   @default(false)
-  createdAt    DateTime? @default(now())
-  updatedAt    DateTime? @updatedAt
-  listIDs      String[]  @db.ObjectId
-  lists        List[]    @relation(fields: [listIDs], references: [id])
-  profileId    String[]  @db.ObjectId
-  profiles     Profile[] @relation(fields: [profileId], references: [id])
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  title            String             @unique
+  description      String
+  imageUrl         String
+  imageTitle       String
+  thumbnailUrl     String
+  trailerUrl       String
+  videoUrl         String
+  year             Int
+  duration         String
+  limit            Int
+  genre            Genre[]
+  isSeries         Boolean            @default(false)
+  createdAt        DateTime?          @default(now())
+  updatedAt        DateTime?          @updatedAt
+  listIDs          String[]           @db.ObjectId
+  lists            List[]             @relation(fields: [listIDs], references: [id])
+  profileId        String[]           @db.ObjectId
+  profiles         Profile[]          @relation(fields: [profileId], references: [id])
+  ContinueWatching ContinueWatching[]
 }
 
 model List {
@@ -107,6 +109,18 @@ model List {
   genre    Genre
   movieIDs String[] @db.ObjectId
   movies   Movie[]  @relation(fields: [movieIDs], references: [id])
+}
+
+model ContinueWatching {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  profileId String   @db.ObjectId
+  movieId   String   @db.ObjectId
+  timestamp Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile Profile @relation(fields: [profileId], references: [id])
+  movie   Movie   @relation(fields: [movieId], references: [id])
 }
 
 enum Genre {

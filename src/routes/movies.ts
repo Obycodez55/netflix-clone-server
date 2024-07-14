@@ -16,6 +16,7 @@ import prismadb from "../lib/prismadb";
 import Movies from "../Utils/Movies";
 import updateMovie from "../handlers/movies/updateMovie";
 import { addToFavorite, getFavouriteList, removeFromFavorite } from "../handlers/movies/profileLists";
+import { getContinueWatching, removeFromContinueWatching, updateContinueWatching } from "../handlers/movies/continueWatching";
 
 
 const router = Router();
@@ -56,5 +57,13 @@ router.get("/:id", authenticateToken(), asyncHandler(getMovieById));
 // DELETE a movie by Id
 router.delete("/:id", authenticateToken("admin"), asyncHandler(deleteMovie));
 
+// Get Continue Watching
+router.get("/continue/:profileId", authenticateToken(), asyncHandler(getContinueWatching));
+
+// Update Continue Watching
+router.put("/continue/:profileId", authenticateToken(), asyncHandler(updateContinueWatching));
+
+// Remove movie from Continue Watching
+router.delete("/continue/:profileId", authenticateToken(), asyncHandler(removeFromContinueWatching));
 
 export default router;
