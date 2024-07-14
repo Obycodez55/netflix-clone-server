@@ -21,7 +21,12 @@ const getProfile = async (request: ProfileRequest, response: Response) => {
                 orderBy: {
                     createdAt: "desc"
                 }
-            }
+            },
+            ContinueWatching: {
+                orderBy: {
+                    createdAt: "desc"
+                }
+            },
         }
     })
     if (!profile) throw new CustomError("Profile not found", 404)
