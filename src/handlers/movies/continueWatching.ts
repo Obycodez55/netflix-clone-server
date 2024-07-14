@@ -63,6 +63,12 @@ const updateContinueWatching = async (request: ContinueWatchingRequest, response
                 movieId
             }
         });
+        await prismadb.watch.create({
+            data: {
+                profileId,
+                movieId
+            }
+        })
     }
     const profile = await prismadb.profile.findUnique({
         where: {

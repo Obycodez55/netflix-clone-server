@@ -17,7 +17,7 @@ import Movies from "../Utils/Movies";
 import updateMovie from "../handlers/movies/updateMovie";
 import { addToFavorite, getFavouriteList, removeFromFavorite } from "../handlers/movies/profileLists";
 import { getContinueWatching, removeFromContinueWatching, updateContinueWatching } from "../handlers/movies/continueWatching";
-
+import { getLists } from "../handlers/movies/lists";
 
 const router = Router();
 
@@ -65,5 +65,8 @@ router.put("/continue/:profileId", authenticateToken(), asyncHandler(updateConti
 
 // Remove movie from Continue Watching
 router.delete("/continue/:profileId", authenticateToken(), asyncHandler(removeFromContinueWatching));
+
+// Get List of Movies
+router.get("/list", authenticateToken(), asyncHandler(getLists));
 
 export default router;
