@@ -25,6 +25,9 @@ const getProfile = async (request: ProfileRequest, response: Response) => {
             ContinueWatching: {
                 orderBy: {
                     createdAt: "desc"
+                },
+                include: {
+                    movie: true
                 }
             },
         }
