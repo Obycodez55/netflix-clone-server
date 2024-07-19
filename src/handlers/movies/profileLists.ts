@@ -50,6 +50,9 @@ const addToFavorite = async (request: ProfileListRequest, response: Response) =>
             id: profileId
         },
         data: {
+            favouriteIds: {
+                push: movieId
+            },
             favourites: {
                 connect: {
                     id: movieId
@@ -80,6 +83,9 @@ const removeFromFavorite = async (request: ProfileListRequest, response: Respons
             id: profileId
         },
         data: {
+            favouriteIds: {
+                set: profileInstance.favouriteIds.filter(favId => favId !== movieId)
+            },
             favourites: {
                 disconnect: {
                     id: movieId
