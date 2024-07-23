@@ -13,6 +13,7 @@ import ListsRouter from "./routes/lists";
 // Import Error Handling middleware
 import errorHandler from "./middlewares/errorHandler";
 import CustomError from "./Utils/CustomError";
+import prismadb from "./lib/prismadb";
 
 const app = express();
 const PORT = 8080;
@@ -36,6 +37,7 @@ app.all("*", async (request: Request, response: Response, next: NextFunction) =>
     next(error);
 })
 app.use(errorHandler);
-app.listen(PORT, () => {
+app.listen(PORT, async() => {
+    // await prismadb.movie.updateMany({data: {videoDuration: 0.00}});
     console.log(`Running on Port ${PORT}`)
 });

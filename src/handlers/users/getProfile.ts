@@ -20,6 +20,9 @@ const getProfile = async (request: ProfileRequest, response: Response) => {
             favourites: {
                 orderBy: {
                     createdAt: "desc"
+                },
+                include: {
+                    movie: true
                 }
             },
             ContinueWatching: {

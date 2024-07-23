@@ -17,7 +17,7 @@ export const getMostRecentlyAdded = async (isSeries?: boolean) => {
 
 // Most Watched
 export const getMostWatched = async (isSeries?: boolean) => {
-    const mostWatchedMovies = await prismadb.watch.groupBy({
+    const mostWatchedResult = await prismadb.watch.groupBy({
         by: ["movieId"],
         _count: {
             movieId: true
@@ -34,30 +34,45 @@ export const getMostWatched = async (isSeries?: boolean) => {
         },
         take: 20
     });
-    return mostWatchedMovies;
+    const mostWatchedIds = mostWatchedResult.map((watch) => watch.movieId);
+    const mostWatched = await prismadb.movie.findMany({
+        where: {
+            id: {
+                in: mostWatchedIds
+            }
+        }
+    });
+    return mostWatched;
 }
 
 //  Most Loved
 export const getMostLoved = async (isSeries?: boolean) => {
-    const mostFavoriteIds = await prismadb.profile.aggregateRaw({
-        pipeline: [
-            { $unwind: '$favoriteIds' },
-            { $group: { _id: '$favoriteIds', count: { $sum: 1 } } },
-            { $sort: { count: -1 } },
-            { $limit: 20 }
-        ]
+    const mostLovedResult = await prismadb.favourite.groupBy({
+        by: ["movieId"],
+        _count: {
+            movieId: true
+        },
+        orderBy: {
+            _count: {
+                movieId: "desc"
+            }
+        },
+        where: {
+            movie: {
+                isSeries
+            }
+        },
+        take: 20
     });
-    if (!mostFavoriteIds) return [];
-    const mostLovedIds = (mostFavoriteIds as unknown as { _id: string; count: number }[]).map((fav) => fav._id);
-    const mostLovedMovies = await prismadb.movie.findMany({
+    const mostLovedIds = mostLovedResult.map((favourite) => favourite.movieId);
+    const mostLoved = await prismadb.movie.findMany({
         where: {
             id: {
                 in: mostLovedIds
-            },
-            isSeries
+            }
         }
     });
-    return mostLovedMovies;
+    return mostLoved;
 }
 
 // By Genre

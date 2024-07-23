@@ -22,6 +22,9 @@ const getFavouriteList = async (request: ProfileListRequest, response: Response)
             favourites: {
                 orderBy: {
                     createdAt: "desc"
+                },
+                include: {
+                    movie: true
                 }
             }
         }
@@ -45,29 +48,13 @@ const addToFavorite = async (request: ProfileListRequest, response: Response) =>
     });
     if (!movie) throw new CustomError("Movie not found", 404);
     // Add the movie to the profile's favourites list
-    const profile = await prismadb.profile.update({
-        where: {
-            id: profileId
-        },
+    const favourite = await prismadb.favourite.create({
         data: {
-            favouriteIds: {
-                push: movieId
-            },
-            favourites: {
-                connect: {
-                    id: movieId
-                }
-            }
-        },
-        include: {
-            favourites: {
-                orderBy: {
-                    createdAt: "desc"
-                }
-            }
+            movieId,
+            profileId
         }
     });
-    response.status(201).send(profile.favourites);
+    response.status(201).send(favourite);
 }
 // Remove from Favourites List
 const removeFromFavorite = async (request: ProfileListRequest, response: Response) => {
@@ -78,29 +65,12 @@ const removeFromFavorite = async (request: ProfileListRequest, response: Respons
     if (!profileInstance) throw new CustomError("You are not authorized to view this list", 403);
     const movieId = request.body.movieId;
     // Remove the movie from the profile's favourites list
-    const profile = await prismadb.profile.update({
+    prismadb.favourite.deleteMany({
         where: {
-            id: profileId
-        },
-        data: {
-            favouriteIds: {
-                set: profileInstance.favouriteIds.filter(favId => favId !== movieId)
-            },
-            favourites: {
-                disconnect: {
-                    id: movieId
-                }
-            }
-        },
-        include: {
-            favourites: {
-                orderBy: {
-                    createdAt: "desc"
-                }
-            }
+            AND: [{movieId}, {profileId}]
         }
-    });
-    response.status(200).send(profile.favourites);
+    })
+    response.status(204).end();
 }
 
 export { getFavouriteList, addToFavorite, removeFromFavorite};

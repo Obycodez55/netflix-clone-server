@@ -25,7 +25,6 @@ model User {
   updatedAt         DateTime  @updatedAt
   profiles          Profile[]
   sessions          Session[]
-  accounts          Account[]
 }
 
 model Profile {
@@ -34,32 +33,25 @@ model Profile {
   profilePic       ProfilePic
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
-  favouriteIds     String[]           @db.ObjectId @default([])
-  favourites       Movie[]            @relation(fields: [favouriteIds], references: [id])
   User             User?              @relation(fields: [userId], references: [id])
   userId           String?            @db.ObjectId
   ContinueWatching ContinueWatching[]
   Watch            Watch[]
+  favourites       Favourite[]
 
   @@unique([name, userId, profilePic])
 }
 
-model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.String
+model Favourite {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  profileId String   @db.ObjectId
+  movieId   String   @db.ObjectId
+  createdAt DateTime @default(now())
 
-  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profile Profile @relation(fields: [profileId], references: [id])
+  movie   Movie   @relation(fields: [movieId], references: [id])
 
-  @@unique([provider, providerAccountId])
+  @@unique([profileId, movieId])
 }
 
 model Session {
@@ -99,10 +91,9 @@ model Movie {
   updatedAt        DateTime?          @updatedAt
   listIDs          String[]           @db.ObjectId
   lists            List[]             @relation(fields: [listIDs], references: [id])
-  profileId        String[]           @db.ObjectId
-  profiles         Profile[]          @relation(fields: [profileId], references: [id])
   ContinueWatching ContinueWatching[]
   Watch            Watch[]
+  Favourite        Favourite[]
 }
 
 model List {
