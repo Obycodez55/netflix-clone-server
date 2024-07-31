@@ -27,7 +27,7 @@ const getProfile = async (request: ProfileRequest, response: Response) => {
             },
             ContinueWatching: {
                 orderBy: {
-                    createdAt: "desc"
+                    updatedAt: "desc"
                 },
                 include: {
                     movie: true
@@ -35,8 +35,11 @@ const getProfile = async (request: ProfileRequest, response: Response) => {
             },
         }
     })
-    if (!profile) throw new CustomError("Profile not found", 404)
-    response.status(200).send(profile);
+    if (!profile) throw new CustomError("Profile not found", 404);
+
+    const favouriteIds = profile.favourites.map((fav) => fav.movieId);
+
+    response.status(200).send({...profile, favouriteIds});
 }
 
 export default getProfile;

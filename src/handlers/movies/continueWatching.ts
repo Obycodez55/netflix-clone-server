@@ -24,7 +24,7 @@ const getContinueWatching = async (request: ContinueWatchingRequest, response: R
         include: {
             ContinueWatching: {
                 orderBy: {
-                    createdAt: "desc"
+                    updatedAt: "desc"
                 }
             }
         }
@@ -77,7 +77,7 @@ const updateContinueWatching = async (request: ContinueWatchingRequest, response
         include: {
             ContinueWatching: {
                 orderBy: {
-                    createdAt: "desc"
+                    updatedAt: "desc"
                 }
             }
         }
@@ -113,7 +113,7 @@ const removeFromContinueWatching = async (request: ContinueWatchingRequest, resp
         include: {
             ContinueWatching: {
                 orderBy: {
-                    createdAt: "desc"
+                    updatedAt: "desc"
                 }
             }
         }

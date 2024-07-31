@@ -13,8 +13,6 @@ const getMovieById = async (request: GetMovieByIdRequest, response: Response) =>
     const profiles = user.profiles;
     const { id } = request.params;
     const { profileId } = request.body;
-    const profileInstance = profiles?.find(profile => profile.id === profileId);
-    if (!profileInstance) throw new CustomError("You are not authorized to view this list", 403);
     const continueWatching = await prismadb.continueWatching.findFirst({
         where: {
             profileId,
