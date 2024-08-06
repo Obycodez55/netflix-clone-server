@@ -18,6 +18,7 @@ import updateMovie from "../handlers/movies/updateMovie";
 import { addToFavorite, getFavouriteList, removeFromFavorite } from "../handlers/movies/profileLists";
 import { getContinueWatching, removeFromContinueWatching, updateContinueWatching } from "../handlers/movies/continueWatching";
 import getLists from "../handlers/movies/lists";
+import search from "../handlers/movies/search";
 
 const router = Router();
 
@@ -33,6 +34,8 @@ router.post("/create", authenticateToken("admin"), async (req: Request, res: Res
     res.status(201).send(movies);
 })
 
+// GET Search 
+router.get("/search", authenticateToken(), asyncHandler(search));
 // Create New Movie
 router.post("/", authenticateToken("admin"), asyncHandler(createMovie))
 
@@ -68,5 +71,7 @@ router.delete("/continue/:profileId", authenticateToken(), asyncHandler(removeFr
 
 // Get List of Movies
 router.get("/lists/all", authenticateToken(), asyncHandler(getLists));
+
+
 
 export default router;

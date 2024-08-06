@@ -16,7 +16,8 @@ export const getMostRecentlyAdded = async (isSeries?: boolean) => {
 }
 
 // Most Watched
-export const getMostWatched = async (isSeries?: boolean) => {
+export const getMostWatched = async (isSeries?: boolean, limit?:boolean) => {
+    const take = limit ? 20 : undefined;
     const mostWatchedResult = await prismadb.watch.groupBy({
         by: ["movieId"],
         _count: {
@@ -32,7 +33,7 @@ export const getMostWatched = async (isSeries?: boolean) => {
                 isSeries
             }
         },
-        take: 20
+        take
     });
     const mostWatchedIds = mostWatchedResult.map((watch) => watch.movieId);
     const mostWatched = await prismadb.movie.findMany({

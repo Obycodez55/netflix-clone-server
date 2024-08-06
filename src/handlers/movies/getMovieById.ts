@@ -9,8 +9,6 @@ interface GetMovieByIdRequest extends AuthenticatedRequest {
 }
 
 const getMovieById = async (request: GetMovieByIdRequest, response: Response) => {
-    const user = request.user as UserInterface;
-    const profiles = user.profiles;
     const { id } = request.params;
     const { profileId } = request.body;
     const continueWatching = await prismadb.continueWatching.findFirst({
