@@ -65,7 +65,7 @@ const removeFromFavorite = async (request: ProfileListRequest, response: Respons
     if (!profileInstance) throw new CustomError("You are not authorized to view this list", 403);
     const movieId = request.body.movieId;
     // Remove the movie from the profile's favourites list
-    prismadb.favourite.deleteMany({
+    await prismadb.favourite.deleteMany({
         where: {
             AND: [{movieId}, {profileId}]
         }
