@@ -42,7 +42,7 @@ npx prisma migrate deploy
 # Start the backend server
 npm run start:dev
 ```
-After starting the backend server, it will be running at http://localhost:5000. The frontend can then interact with the API to handle user authentication, data fetching, and search functionalities.
+After starting the backend server, it will be running at http://localhost:8080. The frontend can then interact with the API to handle user authentication, data fetching, and search functionalities.
 
 ## **Contributing**
 If you'd like to contribute, feel free to fork the repository and submit a pull request with your changes.
